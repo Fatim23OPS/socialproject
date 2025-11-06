@@ -6,7 +6,6 @@
     <title>Inscription - Natfwa9</title>
     <meta name="description" content="Rejoignez Natfwa9, la plateforme éducative pour lycéens avec un soutien personnalisé et bienveillant.">
     <style>
-        /* Reset et variables CSS */
         * {
             margin: 0;
             padding: 0;
@@ -44,7 +43,6 @@
             padding: 0 20px;
         }
 
-        /* Arrière-plan animé avec particules */
         #particles-container {
             position: fixed;
             top: 0;
@@ -64,8 +62,7 @@
         }
 
         @keyframes float {
-            0%,
-            100% {
+            0%, 100% {
                 transform: translateY(0px) rotate(0deg);
             }
             50% {
@@ -73,7 +70,6 @@
             }
         }
 
-        /* Navigation */
         .navbar {
             position: fixed;
             top: 0;
@@ -156,7 +152,6 @@
             transition: var(--transition);
         }
 
-        /* Section d'inscription */
         .signup-section {
             padding: 8rem 0 4rem;
             display: flex;
@@ -169,11 +164,46 @@
             background: var(--white);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 3rem;
             width: 100%;
-            max-width: 500px;
+            max-width: 900px;
             margin: 2rem auto;
             animation: fadeInUp 0.8s ease-out;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+        }
+
+        .signup-image {
+            background: var(--primary-gradient);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .signup-image img {
+            max-width: 80%;
+            height: auto;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+        }
+
+        .signup-image h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .signup-image p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .signup-content {
+            padding: 3rem 2.5rem;
         }
 
         .signup-header {
@@ -182,7 +212,7 @@
         }
 
         .signup-title {
-            font-size: 2rem;
+            font-size: 1.75rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
             color: var(--text-dark);
@@ -190,13 +220,13 @@
 
         .signup-subtitle {
             color: var(--text-light);
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .signup-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem 1.5rem;
         }
 
         .form-group {
@@ -205,34 +235,25 @@
             gap: 0.5rem;
         }
 
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
         .form-label {
             font-weight: 500;
             color: var(--text-dark);
         }
 
-        .form-input {
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 195, 255, 0.1);
-        }
-
+        .form-input,
         .form-select {
-            padding: 1rem;
+            padding: 0.9rem;
             border: 1px solid #ddd;
             border-radius: var(--border-radius);
             font-size: 1rem;
-            background-color: var(--white);
             transition: var(--transition);
         }
 
+        .form-input:focus,
         .form-select:focus {
             outline: none;
             border-color: var(--primary-color);
@@ -243,7 +264,6 @@
             display: flex;
             align-items: flex-start;
             gap: 0.75rem;
-            margin-top: 0.5rem;
         }
 
         .form-checkbox {
@@ -259,7 +279,6 @@
         .checkbox-label a {
             color: var(--primary-color);
             text-decoration: none;
-            transition: var(--transition);
         }
 
         .checkbox-label a:hover {
@@ -267,8 +286,9 @@
         }
 
         .form-submit {
+            grid-column: 1 / -1;
             margin-top: 1rem;
-            padding: 1rem 2rem;
+            padding: 1rem;
             background: var(--primary-gradient);
             color: var(--white);
             border: none;
@@ -277,17 +297,11 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            position: relative;
-            overflow: hidden;
         }
 
         .form-submit:hover {
             transform: translateY(-2px);
             box-shadow: var(--shadow-hover);
-        }
-
-        .form-submit:active {
-            transform: translateY(0);
         }
 
         .login-redirect {
@@ -301,14 +315,12 @@
             color: var(--primary-color);
             text-decoration: none;
             font-weight: 500;
-            transition: var(--transition);
         }
 
         .login-redirect a:hover {
             text-decoration: underline;
         }
 
-        /* Footer */
         .footer {
             background: var(--text-dark);
             color: var(--white);
@@ -321,11 +333,6 @@
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
             margin-bottom: 2rem;
-        }
-
-        .footer-section h3,
-        .footer-section h4 {
-            margin-bottom: 1rem;
         }
 
         .footer-section h3 {
@@ -346,7 +353,6 @@
         .footer-section a {
             color: #ccc;
             text-decoration: none;
-            transition: var(--transition);
         }
 
         .footer-section a:hover {
@@ -360,7 +366,6 @@
             color: #ccc;
         }
 
-        /* Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -372,7 +377,7 @@
             }
         }
 
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 768px) {
             .hamburger {
                 display: flex;
@@ -396,22 +401,22 @@
             }
 
             .signup-container {
-                padding: 2rem;
+                grid-template-columns: 1fr;
+                padding: 0;
                 margin: 1rem;
             }
 
-            .signup-title {
-                font-size: 1.75rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
+            .signup-image {
+                display: none; /* Option : masquer à petit écran */
+                /* ou garder avec padding: 2rem; */
             }
 
-            .signup-container {
-                padding: 1.5rem;
+            .signup-content {
+                padding: 2rem;
+            }
+
+            .signup-form {
+                grid-template-columns: 1fr;
             }
 
             .signup-title {
@@ -419,17 +424,14 @@
             }
         }
 
-        /* Smooth scroll */
         html {
             scroll-behavior: smooth;
         }
     </style>
 </head>
 <body>
-    <!-- Arrière-plan animé avec particules -->
     <div id="particles-container"></div>
     
-    <!-- Navigation sticky -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="nav-logo">
@@ -450,68 +452,77 @@
         </div>
     </nav>
 
-    <!-- Section d'inscription -->
     <section class="signup-section">
         <div class="container">
             <div class="signup-container">
-                <div class="signup-header">
-                    <h2 class="signup-title">Rejoignez Natfwa9</h2>
-                    <p class="signup-subtitle">Créez votre compte pour accéder à toutes nos ressources</p>
+                <!-- Gauche : Logo / Image -->
+                <div class="signup-image">
+                    <!-- Remplace "logo.png" par ton vrai logo ou image -->
+                    <img src="./images/logo.png" alt="Natfwa9 Logo">
+                    <h3>Éducation pour tous</h3>
+                    <p>Accompagnement bienveillant pour chaque lycéen au Maroc.</p>
                 </div>
-                
-                <form class="signup-form" id="signup-form">
-                    <div class="form-group">
-                        <label for="fullname" class="form-label">Nom complet</label>
-                        <input type="text" id="fullname" class="form-input" placeholder="Votre nom complet" required>
+
+                <!-- Droite : Formulaire -->
+                <div class="signup-content">
+                    <div class="signup-header">
+                        <h2 class="signup-title">Rejoignez Natfwa9</h2>
+                        <p class="signup-subtitle">Créez votre compte pour accéder à toutes nos ressources</p>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="email" class="form-label">Adresse email</label>
-                        <input type="email" id="email" class="form-input" placeholder="votre@email.com" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="password" class="form-label">Mot de passe</label>
-                        <input type="password" id="password" class="form-input" placeholder="Créez un mot de passe sécurisé" required minlength="8">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="confirm-password" class="form-label">Confirmer le mot de passe</label>
-                        <input type="password" id="confirm-password" class="form-input" placeholder="Confirmez votre mot de passe" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="user-type" class="form-label">Je suis</label>
-                        <select id="user-type" class="form-select" required>
-                            <option value="" disabled selected>Sélectionnez votre profil</option>
-                            <option value="student">Élève lycéen</option>
-                            <option value="mentor">Mentor/Enseignant</option>
-                            <option value="volunteer">Bénévole</option>
-                            <option value="orphan">Élève orphelin</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="terms" class="form-checkbox" required>
-                            <label for="terms" class="checkbox-label">
-                                J'accepte les <a href="#">Conditions d'utilisation</a> et la 
-                                <a href="#">Politique de confidentialité</a> de Natfwa9
-                            </label>
+                    <form class="signup-form" id="signup-form">
+                        <div class="form-group">
+                            <label for="fullname" class="form-label">Nom complet</label>
+                            <input type="text" id="fullname" class="form-input" placeholder="Votre nom complet" required>
                         </div>
-                    </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Adresse email</label>
+                            <input type="email" id="email" class="form-input" placeholder="votre@email.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password" class="form-label">Mot de passe</label>
+                            <input type="password" id="password" class="form-input" placeholder="Créez un mot de passe sécurisé" required minlength="8">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm-password" class="form-label">Confirmer le mot de passe</label>
+                            <input type="password" id="confirm-password" class="form-input" placeholder="Confirmez votre mot de passe" required>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="user-type" class="form-label">Je suis</label>
+                            <select id="user-type" class="form-select" required>
+                                <option value="" disabled selected>Sélectionnez votre profil</option>
+                                <option value="student">Élève lycéen</option>
+                                <option value="mentor">Mentor/Enseignant</option>
+                                <option value="volunteer">Bénévole</option>
+                                <option value="orphan">Élève orphelin</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="terms" class="form-checkbox" required>
+                                <label for="terms" class="checkbox-label">
+                                    J'accepte les <a href="#">Conditions d'utilisation</a> et la 
+                                    <a href="#">Politique de confidentialité</a>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="form-submit">Créer mon compte</button>
+                    </form>
                     
-                    <button type="submit" class="form-submit">Créer mon compte</button>
-                </form>
-                
-                <div class="login-redirect">
-                    Vous avez déjà un compte ? <a href="connexion.html">Connectez-vous</a>
+                    <div class="login-redirect">
+                        Vous avez déjà un compte ? <a href="connexion.html">Connectez-vous</a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -537,75 +548,56 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Natfwa9. Tous droits réservés.</p>
+                <p>&copy; 2025 Natfwa9. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Script pour l'arrière-plan avec particules
-        document.addEventListener('DOMContentLoaded', function() {
-            const particlesContainer = document.getElementById('particles-container');
-            const particleCount = 30;
+        document.getElementById('signup-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
             
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Taille aléatoire entre 10 et 50px
-                const size = Math.random() * 40 + 10;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Position aléatoire
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                
-                // Délai d'animation aléatoire
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                
-                particlesContainer.appendChild(particle);
+            const pwd = document.getElementById('password').value;
+            const confirm = document.getElementById('confirm-password').value;
+            
+            if (pwd !== confirm) {
+                alert('Les mots de passe ne correspondent pas.');
+                return;
             }
             
-            // Script pour la navbar sticky
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
+            const formData = new FormData();
+            formData.append('fullname', document.getElementById('fullname').value);
+            formData.append('email', document.getElementById('email').value);
+            formData.append('password', pwd);
+            formData.append('confirm_password', confirm);
+            formData.append('user_type', document.getElementById('user-type').value);
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Inscription en cours...';
+            
+            try {
+                const response = await fetch('register.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert(result.message);
+                    window.location.href = result.redirect;
                 } else {
-                    navbar.classList.remove('scrolled');
+                    alert('Erreur: ' + result.message);
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Créer mon compte';
                 }
-            });
-            
-            // Script pour le menu hamburger
-            const hamburger = document.querySelector('.hamburger');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            hamburger.addEventListener('click', function() {
-                hamburger.classList.toggle('active');
-                navMenu.classList.toggle('active');
-            });
-            
-            // Script pour la validation du formulaire
-            const signupForm = document.getElementById('signup-form');
-            
-            signupForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Validation basique
-                const password = document.getElementById('password').value;
-                const confirmPassword = document.getElementById('confirm-password').value;
-                
-                if (password !== confirmPassword) {
-                    alert('Les mots de passe ne correspondent pas.');
-                    return;
-                }
-                
-                // Si validation réussie, on peut soumettre le formulaire
-                alert('Inscription réussie ! Redirection...');
-                // Ici, vous ajouteriez normalement le code pour envoyer les données au serveur
-                // window.location.href = 'tableau-de-bord.html';
-            });
+            } catch (error) {
+                alert('Erreur de connexion au serveur');
+                console.error(error);
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Créer mon compte';
+            }
         });
     </script>
 </body>

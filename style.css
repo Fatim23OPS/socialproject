@@ -342,6 +342,10 @@ section {
   color: var(--text-light);
   max-width: 600px;
   margin: 0 auto;
+  /* Forcer sur une seule ligne */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Section À propos */
@@ -386,7 +390,35 @@ section {
 }
 
 .feature-icon {
-  font-size: 1.5rem;
+  width: 24px;       /* ou 28px, 32px selon ton design */
+  height: 24px;
+  min-width: 24px;   /* pour garder l’alignement */
+  object-fit: contain;
+  display: block;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start; /* ou center, selon l’alignement vertical souhaité */
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--white);
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+/* Icônes dans les cartes de fonctionnalités */
+.feature-card-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.icon-img {
+  width: 60px;        /* ou 70px selon la taille souhaitée */
+  height: auto;
+  display: block;
+  /* Optionnel : si tu veux une couleur unifiée et que tes SVG sont en noir */
+  /* filter: brightness(0) saturate(100%) invert(25%) sepia(80%) saturate(2000%) hue-rotate(170deg); */
 }
 
 .about-visual {
@@ -668,6 +700,72 @@ section {
     flex-direction: column;
     align-items: center;
   }
+
+  /* Section Héros - ajustements fins */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 20px;
+  background: var(--bg-light);
+}
+
+.hero-content {
+  max-width: 800px;
+  z-index: 2; /* Assure que le texte reste au-dessus si besoin */
+  animation: fadeInUp 1s ease-out;
+}
+
+/* Élément décoratif à droite */
+.hero-decor {
+  position: absolute;
+  right: 12%;           /* distance du bord droit */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 160px;         /* taille de l'image */
+  z-index: 1;
+  pointer-events: none; /* empêche les clics accidentels */
+}
+
+.decor-img {
+  width: 60%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 12px rgba(0, 195, 255, 0.15));
+  opacity: 0.9;         /* un peu de transparence pour plus de subtilité */
+  animation: float 8s ease-in-out infinite;
+}
+
+/* Si ton logo est très vertical ou très horizontal, tu peux ajuster avec : */
+/* .decor-img { object-fit: contain; } */
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .hero-decor {
+    right: 10%;
+    width: 140px;
+  }
+}
+
+@media (max-width: 992px) {
+  .hero-decor {
+    right: 8%;
+    width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-decor {
+    display: none; /* masquer sur mobile pour ne pas encombrer */
+  }
+
+  .hero-content {
+    padding: 0 15px;
+  }
+}
 
   .about-content {
     grid-template-columns: 1fr;
