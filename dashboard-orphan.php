@@ -1,3 +1,7 @@
+<?php
+require_once 'auth_check.php';
+checkAuth('orphan');
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,18 +16,24 @@
         }
 
         :root {
-            --primary-gradient: linear-gradient(135deg, #00fde1 0%, #00c3ff 100%);
-            --primary-color: #00c3ff;
-            --secondary-color: #00fde1;
-            --text-dark: #1a1a1a;
-            --text-light: #666;
+            --primary-color: #3b82f6;
+            --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --secondary-color: #10b981;
+            --accent-color: #ef4444;
+            --warm-color: #f59e0b;
+            
+            --text-dark: #111827;
+            --text-light: #6b7280;
             --white: #ffffff;
-            --bg-light: #f8fafc;
+            --bg-light: #f3f4f6;
+            
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --border-radius: 12px;
+            --purple: #8b5cf6;
+            
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --border-radius: 16px;
         }
 
         body {
@@ -38,7 +48,6 @@
             min-height: 100vh;
         }
 
-        /* Sidebar */
         .sidebar {
             background: var(--white);
             box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
@@ -57,6 +66,26 @@
             font-size: 1.5rem;
         }
 
+        .special-access {
+            margin: 1.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(0, 195, 255, 0.1) 100%);
+            border: 2px solid var(--purple);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .special-access h4 {
+            color: var(--purple);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .special-access p {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
         .nav-menu {
             padding: 1.5rem 0;
         }
@@ -72,7 +101,7 @@
         }
 
         .nav-item:hover, .nav-item.active {
-            background: linear-gradient(90deg, rgba(0, 195, 255, 0.1) 0%, transparent 100%);
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%);
             color: var(--primary-color);
             border-left: 3px solid var(--primary-color);
         }
@@ -82,7 +111,6 @@
             height: 20px;
         }
 
-        /* Main Content */
         .main-content {
             padding: 2rem;
         }
@@ -154,7 +182,45 @@
             font-weight: 600;
         }
 
-        /* Stats Cards */
+        .support-banner {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(0, 195, 255, 0.1) 100%);
+            border: 2px solid var(--purple);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .support-banner-icon {
+            font-size: 2.5rem;
+        }
+
+        .support-banner-content {
+            flex: 1;
+        }
+
+        .support-banner-content h3 {
+            margin-bottom: 0.25rem;
+            color: var(--purple);
+        }
+
+        .support-banner-content p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .btn-support {
+            padding: 0.75rem 1.5rem;
+            background: var(--purple);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -195,13 +261,11 @@
 
         .stat-icon.blue { background: rgba(0, 195, 255, 0.1); color: var(--primary-color); }
         .stat-icon.green { background: rgba(16, 185, 129, 0.1); color: var(--success); }
-        .stat-icon.orange { background: rgba(245, 158, 11, 0.1); color: var(--warning); }
-        .stat-icon.purple { background: rgba(168, 85, 247, 0.1); color: #a855f7; }
+        .stat-icon.purple { background: rgba(168, 85, 247, 0.1); color: var(--purple); }
 
-        /* Main Grid */
         .content-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 1.5fr 1fr;
             gap: 1.5rem;
         }
 
@@ -210,6 +274,10 @@
             padding: 1.5rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
+        }
+
+        .card.full-width {
+            grid-column: 1 / -1;
         }
 
         .card-header {
@@ -230,7 +298,6 @@
             font-size: 0.9rem;
         }
 
-        /* Course Item */
         .course-item {
             display: flex;
             gap: 1rem;
@@ -289,43 +356,49 @@
             transition: width 0.3s;
         }
 
-        /* Upcoming Sessions */
-        .session-item {
+        .badge-free {
+            padding: 0.25rem 0.75rem;
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--purple);
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .mentor-item {
             display: flex;
+            align-items: center;
             gap: 1rem;
             padding: 1rem;
-            border-left: 3px solid var(--primary-color);
-            background: rgba(0, 195, 255, 0.05);
+            border: 1px solid #e5e7eb;
             border-radius: 8px;
             margin-bottom: 1rem;
         }
 
-        .session-time {
-            text-align: center;
-            padding: 0.5rem;
-            background: var(--white);
-            border-radius: 8px;
-            min-width: 60px;
+        .mentor-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
         }
 
-        .session-day {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
+        .mentor-info {
+            flex: 1;
         }
 
-        .session-month {
-            font-size: 0.75rem;
-            color: var(--text-light);
-        }
-
-        .session-details h4 {
+        .mentor-info h4 {
             margin-bottom: 0.25rem;
         }
 
-        .session-details p {
+        .mentor-info p {
             color: var(--text-light);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .btn {
@@ -335,6 +408,7 @@
             cursor: pointer;
             font-weight: 500;
             transition: all 0.3s;
+            font-size: 0.9rem;
         }
 
         .btn-primary {
@@ -342,12 +416,46 @@
             color: white;
         }
 
-        .btn-primary:hover {
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 195, 255, 0.3);
         }
 
-        /* Responsive */
+        .resource-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(0, 195, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .resource-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 8px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .resource-info {
+            flex: 1;
+        }
+
+        .resource-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .resource-info p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
         @media (max-width: 1024px) {
             .content-grid {
                 grid-template-columns: 1fr;
@@ -366,16 +474,26 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
+
+            .support-banner {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="dashboard">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
-                <h2>Natfwa9</h2>
+                <img src="logo.png" alt="Natfwa9" style="height: 40px;">
             </div>
+            
+            <div class="special-access">
+                <h4>✨ Accès Gratuit Complet</h4>
+                <p>Toutes les ressources à 100% gratuites</p>
+            </div>
+
             <nav class="nav-menu">
                 <div class="nav-item active">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -391,21 +509,21 @@
                 </div>
                 <div class="nav-item">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                    <span>Ressources Gratuites</span>
+                </div>
+                <div class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <span>Mon Mentor</span>
+                </div>
+                <div class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                     </svg>
                     <span>Planning</span>
-                </div>
-                <div class="nav-item">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
-                    </svg>
-                    <span>Tutorat</span>
-                </div>
-                <div class="nav-item">
-                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                    </svg>
-                    <span>Ressources</span>
                 </div>
                 <div class="nav-item">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -415,7 +533,13 @@
                 </div>
                 <div class="nav-item">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>Soutien Psychologique</span>
+                </div>
+                <div class="nav-item">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
                     </svg>
                     <span>Communauté</span>
                 </div>
@@ -426,79 +550,87 @@
                     </svg>
                     <span>Paramètres</span>
                 </div>
+                <a href="logout.php" class="nav-item" style="text-decoration: none; margin-top: auto; border-top: 1px solid #f0f0f0;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #ef4444;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                    <span style="color: #ef4444;">Déconnexion</span>
+                </a>
+                
             </nav>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
             <header class="header">
                 <div class="welcome">
-                    <h1>Bienvenue, Ahmed! 👋</h1>
-                    <p>Voici un aperçu de ton parcours aujourd'hui</p>
+                    <h1>Bienvenue, <?php echo htmlspecialchars($_SESSION['fullname']); ?>! 👋</h1>
+                    <p>Continue ton excellent travail</p>
                 </div>
                 <div class="user-actions">
                     <button class="notification-btn">
                         🔔
-                        <span class="notification-badge">3</span>
+                        <span class="notification-badge">5</span>
                     </button>
                     <div class="user-profile">
-                        <div class="avatar">AK</div>
-                        <span>Ahmed Khalil</span>
+                        <div class="avatar">YB</div>
+                        <span><?php echo htmlspecialchars($_SESSION['fullname']); ?></span>
                     </div>
                 </div>
             </header>
 
-            <!-- Stats -->
+            <div class="support-banner">
+                <div class="support-banner-icon">💜</div>
+                <div class="support-banner-content">
+                    <h3>Besoin d'aide ou de soutien?</h3>
+                    <p>Notre équipe et nos psychologues sont là pour toi 24/7</p>
+                </div>
+                <button class="btn-support">Contacter</button>
+            </div>
+
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-info">
                         <h3>8</h3>
-                        <p>Cours en cours</p>
+                        <p>Cours gratuits actifs</p>
                     </div>
                     <div class="stat-icon blue">📚</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-info">
-                        <h3>85%</h3>
+                        <h3>92%</h3>
                         <p>Taux de réussite</p>
                     </div>
                     <div class="stat-icon green">✓</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-info">
-                        <h3>12h</h3>
+                        <h3>15h</h3>
                         <p>Temps d'étude cette semaine</p>
                     </div>
-                    <div class="stat-icon orange">⏱</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <h3>5</h3>
-                        <p>Sessions à venir</p>
-                    </div>
-                    <div class="stat-icon purple">📅</div>
+                    <div class="stat-icon purple">⏱</div>
                 </div>
             </div>
 
-            <!-- Main Grid -->
             <div class="content-grid">
-                <!-- Mes Cours -->
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title">Cours en cours</h2>
+                        <h2 class="card-title">Mes Cours</h2>
                         <a href="#" class="view-all">Voir tout →</a>
                     </div>
                     
                     <div class="course-item">
                         <div class="course-thumbnail">🧮</div>
                         <div class="course-info">
-                            <h4>Mathématiques - Algèbre</h4>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h4>Mathématiques - Algèbre</h4>
+                                <span class="badge-free">GRATUIT</span>
+                            </div>
                             <div class="course-meta">
                                 <span>📖 Chapitre 5/12</span>
                                 <span>👨‍🏫 Prof. Bennani</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 65%"></div>
+                                <div class="progress-fill" style="width: 70%"></div>
                             </div>
                         </div>
                     </div>
@@ -506,13 +638,16 @@
                     <div class="course-item">
                         <div class="course-thumbnail">🔬</div>
                         <div class="course-info">
-                            <h4>Physique - Mécanique</h4>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h4>Physique - Mécanique</h4>
+                                <span class="badge-free">GRATUIT</span>
+                            </div>
                             <div class="course-meta">
-                                <span>📖 Chapitre 3/10</span>
+                                <span>📖 Chapitre 4/10</span>
                                 <span>👨‍🏫 Prof. Alami</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 40%"></div>
+                                <div class="progress-fill" style="width: 50%"></div>
                             </div>
                         </div>
                     </div>
@@ -520,56 +655,85 @@
                     <div class="course-item">
                         <div class="course-thumbnail">🌍</div>
                         <div class="course-info">
-                            <h4>Français - Littérature</h4>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h4>Français - Littérature</h4>
+                                <span class="badge-free">GRATUIT</span>
+                            </div>
                             <div class="course-meta">
-                                <span>📖 Chapitre 8/12</span>
+                                <span>📖 Chapitre 9/12</span>
                                 <span>👩‍🏫 Prof. Mansouri</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 75%"></div>
+                                <div class="progress-fill" style="width: 85%"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Sessions à venir -->
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title">Sessions à venir</h2>
-                        <a href="#" class="view-all">Planning →</a>
+                        <h2 class="card-title">Mon Équipe de Soutien</h2>
                     </div>
 
-                    <div class="session-item">
-                        <div class="session-time">
-                            <div class="session-day">15</div>
-                            <div class="session-month">NOV</div>
+                    <div class="mentor-item">
+                        <div class="mentor-avatar">MB</div>
+                        <div class="mentor-info">
+                            <h4>Mohamed Bennani</h4>
+                            <p>Mentor Mathématiques</p>
                         </div>
-                        <div class="session-details">
-                            <h4>Tutorat Mathématiques</h4>
-                            <p>14:00 - 15:00 • En ligne</p>
-                            <button class="btn btn-primary" style="margin-top: 0.5rem;">Rejoindre</button>
-                        </div>
+                        <button class="btn btn-primary">Message</button>
                     </div>
 
-                    <div class="session-item">
-                        <div class="session-time">
-                            <div class="session-day">16</div>
-                            <div class="session-month">NOV</div>
+                    <div class="mentor-item">
+                        <div class="mentor-avatar">FZ</div>
+                        <div class="mentor-info">
+                            <h4>Fatima Zahra</h4>
+                            <p>Bénévole - Soutien scolaire</p>
                         </div>
-                        <div class="session-details">
-                            <h4>Cours de Physique</h4>
-                            <p>10:00 - 11:30 • En ligne</p>
-                        </div>
+                        <button class="btn btn-primary">Message</button>
                     </div>
 
-                    <div class="session-item">
-                        <div class="session-time">
-                            <div class="session-day">17</div>
-                            <div class="session-month">NOV</div>
+                    <div class="mentor-item">
+                        <div class="mentor-avatar">SK</div>
+                        <div class="mentor-info">
+                            <h4>Dr. Sarah Karim</h4>
+                            <p>Psychologue</p>
                         </div>
-                        <div class="session-details">
-                            <h4>Atelier d'orientation</h4>
-                            <p>15:00 - 16:00 • En ligne</p>
+                        <button class="btn btn-primary">Prendre RDV</button>
+                    </div>
+                </div>
+
+                <div class="card full-width">
+                    <div class="card-header">
+                        <h2 class="card-title">Ressources Gratuites Recommandées</h2>
+                        <a href="#" class="view-all">Voir toutes →</a>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                        <div class="resource-item">
+                            <div class="resource-icon">📄</div>
+                            <div class="resource-info">
+                                <h4>Guide de révision Bac 2025</h4>
+                                <p>PDF • Toutes les matières</p>
+                            </div>
+                            <button class="btn btn-primary">Télécharger</button>
+                        </div>
+
+                        <div class="resource-item">
+                            <div class="resource-icon">🎥</div>
+                            <div class="resource-info">
+                                <h4>Vidéos d'orientation</h4>
+                                <p>Série • Choix de carrière</p>
+                            </div>
+                            <button class="btn btn-primary">Regarder</button>
+                        </div>
+
+                        <div class="resource-item">
+                            <div class="resource-icon">📚</div>
+                            <div class="resource-info">
+                                <h4>Exercices corrigés</h4>
+                                <p>PDF • Maths & Sciences</p>
+                            </div>
+                            <button class="btn btn-primary">Accéder</button>
                         </div>
                     </div>
                 </div>

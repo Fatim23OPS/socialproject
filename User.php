@@ -1,4 +1,3 @@
-<!-- 4. Classe User pour la gestion des utilisateurs -->
 <?php
 // Fichier: User.php
 
@@ -78,7 +77,7 @@ class User {
     
     // Connexion utilisateur
     public function login($email, $password) {
-        $query = "SELECT id, fullname, email, password, user_type FROM users WHERE email = :email AND is_active = TRUE";
+        $query = "SELECT id, fullname, email, password, user_type FROM users WHERE email = :email";
         
         try {
             $stmt = $this->conn->prepare($query);

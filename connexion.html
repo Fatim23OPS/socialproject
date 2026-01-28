@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Natfwa9</title>
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --text-dark: #111827;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --bg-light: #f3f4f6;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --border-radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            color: var(--text-dark);
+        }
+
+        .login-container {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 450px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo p {
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 9999px;
+            font-size: 1rem;
+            transition: all 0.2s;
+            background: #f9fafb;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: var(--primary-gradient);
+            color: var(--white);
+            border: none;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: margin-top 0.2s, transform 0.2s, box-shadow 0.2s;
+            margin-top: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
+        }
+
+        .error {
+            color: #ef4444;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            text-align: center;
+            background: #fef2f2;
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid #fee2e2;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="logo.png" alt="Natfwa9" style="height: 80px; mix-blend-mode: multiply;">
+            <p>Bon retour parmi nous</p>
+        </div>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="votre@email.com">
+            </div>
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" required placeholder="Votre mot de passe">
+            </div>
+            <button type="submit" class="btn">Se connecter</button>
+            <div id="error-msg" class="error"></div>
+        </form>
+        <div class="footer">
+            Pas encore de compte? <a href="inscreption.html">S'inscrire</a><br>
+            <a href="index.html">Retour à l'accueil</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const errorDiv = document.getElementById('error-msg');
+            const formData = new FormData(this);
+
+            btn.disabled = true;
+            btn.textContent = 'Connexion...';
+            errorDiv.textContent = '';
+
+            try {
+                const response = await fetch('login.php', { method: 'POST', body: formData });
+                const text = await response.text();
+
+                try {
+                    const data = JSON.parse(text);
+                    if (data.success) {
+                        window.location.href = data.redirect;
+                    } else {
+                        errorDiv.textContent = data.message || 'Erreur inconnue';
+                        btn.disabled = false;
+                        btn.textContent = 'Se connecter';
+                    }
+                } catch (e) {
+                    console.error('Réponse brute:', text);
+                    errorDiv.textContent = 'Erreur serveur: Réponse invalide';
+                    btn.disabled = false;
+                    btn.textContent = 'Se connecter';
+                }
+            } catch (err) {
+                console.error(err);
+                errorDiv.textContent = 'Erreur de connexion';
+                btn.disabled = false;
+                btn.textContent = 'Se connecter';
+            }
+        });
+    </script>
+</body>
+
+</html>

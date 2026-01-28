@@ -1,6 +1,5 @@
-<!-- 6. Script de connexion -->
 <?php
-// Fichier: login.php
+
 
 require_once 'config.php';
 require_once 'User.php';

@@ -1,3 +1,7 @@
+<?php
+require_once 'auth_check.php';
+checkAuth('mentor');
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -12,19 +16,24 @@
         }
 
         :root {
-            --primary-gradient: linear-gradient(135deg, #00fde1 0%, #00c3ff 100%);
-            --primary-color: #00c3ff;
-            --secondary-color: #00fde1;
-            --text-dark: #1a1a1a;
-            --text-light: #666;
+            --primary-color: #3b82f6;
+            --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            --secondary-color: #10b981;
+            --accent-color: #ef4444;
+            --warm-color: #f59e0b;
+            
+            --text-dark: #111827;
+            --text-light: #6b7280;
             --white: #ffffff;
-            --bg-light: #f8fafc;
+            --bg-light: #f3f4f6;
+            
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
-            --purple: #a855f7;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --border-radius: 12px;
+            --purple: #8b5cf6;
+            
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --border-radius: 16px;
         }
 
         body {
@@ -78,7 +87,7 @@
         }
 
         .nav-item:hover, .nav-item.active {
-            background: linear-gradient(90deg, rgba(0, 195, 255, 0.1) 0%, transparent 100%);
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.1) 0%, transparent 100%);
             color: var(--primary-color);
             border-left: 3px solid var(--primary-color);
         }
@@ -419,7 +428,7 @@
     <div class="dashboard">
         <aside class="sidebar">
             <div class="logo">
-                <h2>Natfwa9</h2>
+                <img src="logo.png" alt="Natfwa9" style="height: 40px;">
                 <p>Espace Mentor</p>
             </div>
             <nav class="nav-menu">
@@ -472,20 +481,26 @@
                     </svg>
                     <span>Paramètres</span>
                 </div>
+                <a href="logout.php" class="nav-item" style="text-decoration: none; margin-top: auto; border-top: 1px solid #f0f0f0;">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: #ef4444;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                    <span style="color: #ef4444;">Déconnexion</span>
+                </a>
             </nav>
         </aside>
 
         <main class="main-content">
             <header class="header">
                 <div class="welcome">
-                    <h1>Bonjour, Prof. Bennani! 👨‍🏫</h1>
+                    <h1>Bonjour, <?php echo htmlspecialchars($_SESSION['fullname']); ?>! 👨‍🏫</h1>
                     <p>Vous avez 3 sessions aujourd'hui</p>
                 </div>
                 <div class="user-actions">
                     <button class="action-btn">+ Créer une session</button>
                     <div class="user-profile">
                         <div class="avatar">MB</div>
-                        <span>Mohamed Bennani</span>
+                        <span><?php echo htmlspecialchars($_SESSION['fullname']); ?></span>
                     </div>
                 </div>
             </header>

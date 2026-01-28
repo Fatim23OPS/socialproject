@@ -345,3 +345,88 @@ function isElementInViewport(el) {
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   )
 }
+
+// ===== GESTION DU LOGIN =====
+function initLoginModal() {
+  const modal = document.getElementById('login-modal')
+  const btn = document.getElementById('login-btn')
+  const span = document.getElementsByClassName('close-modal')[0]
+  const form = document.getElementById('login-form')
+  const errorMsg = document.getElementById('login-error')
+
+  // Ouvrir le modal
+  if (btn) {
+    btn.onclick = (e) => {
+      e.preventDefault()
+      modal.style.display = 'flex'
+      // Nécessaire pour l'animation
+      setTimeout(() => modal.classList.add('show'), 10)
+    }
+  }
+
+  // Fermer le modal
+  if (span) {
+    span.onclick = () => {
+      modal.classList.remove('show')
+      setTimeout(() => modal.style.display = 'none', 300)
+    }
+  }
+
+  // Fermer en cliquant ailleurs
+  window.onclick = (event) => {
+    if (event.target == modal) {
+      modal.classList.remove('show')
+      setTimeout(() => modal.style.display = 'none', 300)
+    }
+  }
+
+  // Soumission du formulaire
+  if (form) {
+    form.onsubmit = async (e) => {
+      e.preventDefault()
+      const submitBtn = form.querySelector('button[type="submit"]')
+      const originalText = submitBtn.textContent
+      
+      submitBtn.disabled = true
+      submitBtn.textContent = 'Connexion...'
+      errorMsg.textContent = ''
+
+      const formData = new FormData(form)
+
+      try {
+        const response = await fetch('login.php', {
+          method: 'POST',
+          body: formData
+        })
+        
+        const data = await response.json()
+        
+        if (data.success) {
+          window.location.href = data.redirect
+        } else {
+          errorMsg.textContent = data.message || 'Erreur lors de la connexion'
+          submitBtn.disabled = false
+          submitBtn.textContent = originalText
+        }
+      } catch (error) {
+        console.error('Erreur:', error)
+        errorMsg.textContent = 'Erreur de connexion au serveur'
+        submitBtn.disabled = false
+        submitBtn.textContent = originalText
+      }
+    }
+  }
+}
+
+initLoginModal()
+
+
+// Check for #login hash
+if (window.location.hash === '#login') {
+    const modal = document.getElementById('login-modal');
+    if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(() => modal.classList.add('show'), 10);
+    }
+}
+

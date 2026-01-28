@@ -1,6 +1,4 @@
-<!-- 8. Middleware de vérification d'authentification -->
 <?php
-// Fichier: auth_check.php
 
 require_once 'config.php';
 require_once 'Database.php';
